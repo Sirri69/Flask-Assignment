@@ -49,6 +49,9 @@ class Tasks(db.Model):
 @with_appcontext
 def create_tables():
     db.create_all()
+    print('Tables Created')
+
+app.cli.add_command(create_tables)
 
 def authenticate(uname, passw):
     user = Users.query.filter_by(username=uname).first() or None
