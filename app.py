@@ -4,6 +4,7 @@ from flask.cli import with_appcontext
 import hashlib
 import datetime
 import click
+import os
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import sql
@@ -20,7 +21,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretstuff'
 app.config['JWT_SECRET_KEY'] = 'supersecretstuff'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 jwt = JWTManager(app)
 
 SALT = '89&19bdAa9e0$a'
