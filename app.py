@@ -98,6 +98,8 @@ def signup_worker():
 @app.route('/users')
 @jwt_required()
 def users():
+    current_user = Users.query.filter_by(username=get_jwt_identity()).first() or None
+    if current_user.role != 'admin': return 'You are not allowed to do this action'
     j = {}
     for i in Users.query.all():
         j[i.username] = {
