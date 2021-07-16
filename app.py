@@ -135,6 +135,9 @@ def jobs():
             return 'No such user'
 
     elif request.method == 'POST':
+        current_user = Users.query.filter_by(username=get_jwt_identity()).first() or None
+        if current_user.role != 'admin': return 'You are not allowed to do this'
+
         worker  = request.json.get('worker_name') # worker name is used instead of worker id
         task = request.json.get('task')
         status = request.json.get('status')
